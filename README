@@ -1,0 +1,11 @@
+Author: Mikulas Dite
+Copyright: Mikulas Dite 2010
+License: MIT
+Requirements: Growl, GrowlNotify
+
+Triggeres Growl system notification on Mac systems
+
+This implementation uses growlnotify found in the extras in the Growl package.
+Default installer should put all files into /usr/local/bin/, don't forget to change this if growlnotify is somewhere else.
+
+Download Growl from http://growl.info/
