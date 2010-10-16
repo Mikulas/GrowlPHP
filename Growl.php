@@ -9,15 +9,15 @@ namespace Notification;
  *
  * @uses growl
  * @see http://growl.info/
- * 
+ *
  * @uses growlnotify
  * @see http://growl.info/extras.php
  *
- * 
+ *
  * @author Mikulas Dite
  * @copyright Mikulas Dite 2010
  *
- * 
+ *
  * @static
  */
 class Growl
@@ -70,14 +70,14 @@ class Growl
 	 *
 	 * @param string $message
 	 * @param string $title
-	 * @param string $appIcon
+	 * @param string $icon either name of application or absolute path to image
 	 * @param int $priority
 	 * @param bool $sticky
 	 * @param bool $wait
 	 *
 	 * @throws \Notification\GrowlException
 	 */
-	public static function notify($message, $title = NULL, $appIcon = NULL, $priority = NULL, $sticky = NULL, $wait = NULL)
+	public static function notify($message, $title = NULL, $icon = NULL, $priority = NULL, $sticky = NULL, $wait = NULL)
 	{
 		self::checkEnvironment();
 
@@ -88,15 +88,19 @@ class Growl
 		} else {
 			$command .= " --message " . escapeshellarg($message);
 		}
-		
+
 		if ($title != '')
 		{
 			$command .= " --title " . escapeshellarg($title);
 		}
-		
-		if ($appIcon != '')
+
+		if ($icon != '')
 		{
-			$command .= " --appIcon " . escapeshellarg($appIcon);
+			if (strstr($icon, '/')) {
+				$command .= " --image " . escapeshellarg($icon);
+			} else {
+				$command .= " --appIcon " . escapeshellarg($icon);
+			}
 		}
 
 		if ((int) $priority != '')
@@ -113,11 +117,11 @@ class Growl
 			$command .= " --wait";
 		}
 
-		exec(escapeshellcmd($command));
+		exec($command);
 	}
 }
 
 class GrowlException extends \Exception
 {
-	
+
 }
